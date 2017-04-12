@@ -58,16 +58,19 @@ public class WatsonConversation
 
 			obj = (JsonObject) ((JsonArray) dbEntry.getValue()).get(0);
 			obj = (JsonObject) obj.get("credentials");
-			
+
 			username = obj.get("username").getAsString();
 			password = obj.get("password").getAsString();
-			
-			service = new ConversationService(ConversationService.VERSION_DATE_2017_02_03);
+
+			//username = "ef169fc8-e030-40f4-9c42-5cf2991e9a5a";
+			//password = "vERjOl8HFpbj";
+
+			service = new ConversationService(ConversationService.VERSION_DATE_2016_09_20);
 			service.setUsernameAndPassword(username, password);			
 
 		} else {
 			throw new RuntimeException("VCAP_SERVICES not found");
-		}
+		} 
 		
 //		username = "ef169fc8-e030-40f4-9c42-5cf2991e9a5a";
 //		password = "vERjOl8HFpbj";
