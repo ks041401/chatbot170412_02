@@ -58,9 +58,9 @@ public class SqlSessionManager
 		{
 			Properties pro = new Properties();
 	
-			jdbcUrl = "jdbc:db2://dashdb-entry-yp-dal09-07.services.dal.bluemix.net:50001/BLUDB:sslConnection=true;";
-			userId = "dash5537";
-			passwd = "Ed6Yu1sj}L_Q";
+//			jdbcUrl = "jdbc:db2://dashdb-entry-yp-dal09-07.services.dal.bluemix.net:50001/BLUDB:sslConnection=true;";
+//			userId = "dash5537";
+//			passwd = "Ed6Yu1sj}L_Q";
 			pro.put("driver", "com.ibm.db2.jcc.DB2Driver");
 			pro.put("url", jdbcUrl);
 			pro.put("username", userId);
