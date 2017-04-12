@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageRequest;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
@@ -18,7 +23,7 @@ public class WatsonConversation
 {
 	private String username;
 	private String password;
-	private String usWorkId = "a4a576c2-0b00-4fac-8a82-52ed4cc8f676";
+	private String usWorkId = "5134c3f5-e49c-4a0e-a2e9-a6a497af8d90";
 	private String krWorkId = "a4a576c2-0b00-4fac-8a82-52ed4cc8f676";
 	
 	private ConversationService service;
@@ -58,25 +63,22 @@ public class WatsonConversation
 
 			obj = (JsonObject) ((JsonArray) dbEntry.getValue()).get(0);
 			obj = (JsonObject) obj.get("credentials");
-
+			
 			username = obj.get("username").getAsString();
 			password = obj.get("password").getAsString();
-
-			//username = "ef169fc8-e030-40f4-9c42-5cf2991e9a5a";
-			//password = "vERjOl8HFpbj";
-
-			service = new ConversationService(ConversationService.VERSION_DATE_2016_09_20);
+			
+			service = new ConversationService(ConversationService.VERSION_DATE_2017_02_03);
 			service.setUsernameAndPassword(username, password);			
 
 		} else {
 			throw new RuntimeException("VCAP_SERVICES not found");
-		} 
+		}
 		
 //		username = "ef169fc8-e030-40f4-9c42-5cf2991e9a5a";
 //		password = "vERjOl8HFpbj";
-//
-//		service = new ConversationService(ConversationService.VERSION_DATE_2016_09_20);
-//		service.setUsernameAndPassword(username, password);			
+
+		service = new ConversationService(ConversationService.VERSION_DATE_2016_09_20);
+		service.setUsernameAndPassword(username, password);			
 	}
 	
 	
@@ -96,6 +98,8 @@ public class WatsonConversation
 				  .context(session.getContext())
 				  .build();
 
+		System.out.println("@.@ " + isKr + "( " + (isKr ? krWorkId : usWorkId) + " )");
+		
 		MessageResponse response = service.message(isKr ? krWorkId : usWorkId, newMessage).execute();
 		//session.putAll(response.getContext());
 		
@@ -116,7 +120,6 @@ public class WatsonConversation
 						Map<String, Object> parm = new HashMap<String, Object>();
 						parm.putAll((Map)prm);
 
-						System.out.println("$$$$ 1 " + parm);
 						session.setParameters(parm);
 					}
 					
@@ -136,37 +139,29 @@ public class WatsonConversation
 		}
 
 		System.out.println(response);
+		
+		session.setDebug(response.toString());
 
 		Object postAction = output.get("postAction");
 		if ( postAction != null )
 		{
 			IAction psAct = actionCollection.getAction(postAction.toString());
 			
-			//System.out.println("@@@@@@@@@@@@@@@ psAct=" + psAct);
-			
 			if ( psAct != null )
 			{
 				try
 				{
 					Object prm = response.getContext().get("params");
-					
-					//System.out.println("@@@@@@@@@@@@@@@ prm=" + prm);
 					if ( prm != null )
 					{
 						Map<String, Object> parm = new HashMap<String, Object>();
 						parm.putAll((Map)prm);
 
-						System.out.println("$$$$ 2 " + parm);
 						session.setParameters(parm);
 					}
 					
-					//System.out.println("@@@@@@@@@@@@@@@ postAction=" + postAction);
-					
-					//System.out.println("@@@@@@@@@@@@@@@ session.getParamaters()=" + session.getParamaters());
-					
 					Map<String, Object> rs = psAct.doAction(postAction.toString(), session.getParamaters());
 					
-					//System.out.println("@@@@@@@@@@@@@@@ rs=" + rs);
 					if ( rs != null )
 					{
 						JsonObject postResult = new JsonObject();
