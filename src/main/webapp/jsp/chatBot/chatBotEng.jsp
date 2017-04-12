@@ -184,7 +184,7 @@
 								</ul>
 								<div class="bottom_wrapper clearfix">
 									<div class="message_input_wrapper">
-										<input class="message_input" placeholder="메시지를 입력하세요...">
+										<input class="message_input" placeholder="Enter your message...">
 									</div>
 									<div class="send_message">
 										<div class="icon"></div>

@@ -41,39 +41,39 @@ public class WatsonConversation
 	 */
 	private void loadConfig() throws Exception
 	{
-//		String VCAP_SERVICES = System.getenv("VCAP_SERVICES");
-//		if (VCAP_SERVICES != null) {
-//			JsonObject obj = (JsonObject) new JsonParser().parse(VCAP_SERVICES);
-//			Entry<String, JsonElement> dbEntry = null;
-//			Set<Entry<String, JsonElement>> entries = obj.entrySet();
-//			for (Entry<String, JsonElement> eachEntry : entries) {
-//				if (eachEntry.getKey().toLowerCase().contains("conversation")) {
-//					dbEntry = eachEntry;
-//					break;
-//				}
-//			}
-//			if (dbEntry == null) {
-//				throw new RuntimeException("Could not find Conversation key in VCAP_SERVICES env variable");
-//			}
-//
-//			obj = (JsonObject) ((JsonArray) dbEntry.getValue()).get(0);
-//			obj = (JsonObject) obj.get("credentials");
-//			
-//			username = obj.get("username").getAsString();
-//			password = obj.get("password").getAsString();
-//			
-//			service = new ConversationService(ConversationService.VERSION_DATE_2017_02_03);
-//			service.setUsernameAndPassword(username, password);			
-//
-//		} else {
-//			throw new RuntimeException("VCAP_SERVICES not found");
-//		}
-		
-		username = "ef169fc8-e030-40f4-9c42-5cf2991e9a5a";
-		password = "vERjOl8HFpbj";
+		String VCAP_SERVICES = System.getenv("VCAP_SERVICES");
+		if (VCAP_SERVICES != null) {
+			JsonObject obj = (JsonObject) new JsonParser().parse(VCAP_SERVICES);
+			Entry<String, JsonElement> dbEntry = null;
+			Set<Entry<String, JsonElement>> entries = obj.entrySet();
+			for (Entry<String, JsonElement> eachEntry : entries) {
+				if (eachEntry.getKey().toLowerCase().contains("conversation")) {
+					dbEntry = eachEntry;
+					break;
+				}
+			}
+			if (dbEntry == null) {
+				throw new RuntimeException("Could not find Conversation key in VCAP_SERVICES env variable");
+			}
 
-		service = new ConversationService(ConversationService.VERSION_DATE_2016_09_20);
-		service.setUsernameAndPassword(username, password);			
+			obj = (JsonObject) ((JsonArray) dbEntry.getValue()).get(0);
+			obj = (JsonObject) obj.get("credentials");
+			
+			username = obj.get("username").getAsString();
+			password = obj.get("password").getAsString();
+			
+			service = new ConversationService(ConversationService.VERSION_DATE_2017_02_03);
+			service.setUsernameAndPassword(username, password);			
+
+		} else {
+			throw new RuntimeException("VCAP_SERVICES not found");
+		}
+		
+//		username = "ef169fc8-e030-40f4-9c42-5cf2991e9a5a";
+//		password = "vERjOl8HFpbj";
+//
+//		service = new ConversationService(ConversationService.VERSION_DATE_2016_09_20);
+//		service.setUsernameAndPassword(username, password);			
 	}
 	
 	

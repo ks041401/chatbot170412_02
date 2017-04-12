@@ -30,29 +30,29 @@ public class SqlSessionManager
 		String userId = null;
 		String passwd = null;
 		
-//		if (VCAP_SERVICES != null) {
-//			JsonObject obj = (JsonObject) new JsonParser().parse(VCAP_SERVICES);
-//			Entry<String, JsonElement> dbEntry = null;
-//			Set<Entry<String, JsonElement>> entries = obj.entrySet();
-//			for (Entry<String, JsonElement> eachEntry : entries) {
-//				if (eachEntry.getKey().toLowerCase().contains("dashdb")) {
-//					dbEntry = eachEntry;
-//					break;
-//				}
-//			}
-//			if (dbEntry == null) {
-//				throw new RuntimeException("Could not find cloudantNoSQLDB key in VCAP_SERVICES env variable");
-//			}
-//
-//			obj = (JsonObject) ((JsonArray) dbEntry.getValue()).get(0);
-//			obj = (JsonObject) obj.get("credentials");
-//
-//			jdbcUrl = obj.get("jdbcurl").getAsString();
-//			userId = obj.get("username").getAsString();
-//			passwd = obj.get("password").getAsString();
-//		} else {
-//			throw new RuntimeException("VCAP_SERVICES not found");
-//		}
+		if (VCAP_SERVICES != null) {
+			JsonObject obj = (JsonObject) new JsonParser().parse(VCAP_SERVICES);
+			Entry<String, JsonElement> dbEntry = null;
+			Set<Entry<String, JsonElement>> entries = obj.entrySet();
+			for (Entry<String, JsonElement> eachEntry : entries) {
+				if (eachEntry.getKey().toLowerCase().contains("dashdb")) {
+					dbEntry = eachEntry;
+					break;
+				}
+			}
+			if (dbEntry == null) {
+				throw new RuntimeException("Could not find cloudantNoSQLDB key in VCAP_SERVICES env variable");
+			}
+
+			obj = (JsonObject) ((JsonArray) dbEntry.getValue()).get(0);
+			obj = (JsonObject) obj.get("credentials");
+
+			jdbcUrl = obj.get("jdbcurl").getAsString();
+			userId = obj.get("username").getAsString();
+			passwd = obj.get("password").getAsString();
+		} else {
+			throw new RuntimeException("VCAP_SERVICES not found");
+		}
 		
 		try
 		{
