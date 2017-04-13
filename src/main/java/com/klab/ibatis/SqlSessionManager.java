@@ -25,7 +25,7 @@ public class SqlSessionManager
 	 */
 	private static void _connection()
 	{
-		//String VCAP_SERVICES = System.getenv("VCAP_SERVICES");
+		String VCAP_SERVICES = System.getenv("VCAP_SERVICES");
 		String jdbcUrl = null;
 		String userId = null;
 		String passwd = null;

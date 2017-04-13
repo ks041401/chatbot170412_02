@@ -26,6 +26,7 @@ public class ConversationSession
 	private String inputString;
 	private boolean korean;
 	private JsonObject postResult;
+	private String debug;
 	
 	public ConversationSession()
 	{
@@ -36,6 +37,16 @@ public class ConversationSession
 		outputString = new ArrayList<String>();
 	}
 	
+	public String getDebug() {
+		return debug;
+	}
+
+	/**
+	 * @param debug the debug to set
+	 */
+	public void setDebug(String debug) {
+		this.debug = debug;
+	}
 	public JsonObject getPostResult() {
 		return postResult;
 	}

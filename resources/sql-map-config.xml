@@ -44,6 +44,7 @@
     -->
 
 	<transactionManager type="JDBC" >
+		<dataSource	<transactionManager type="JDBC" >
 		<dataSource type="SIMPLE">
 			<property name="JDBC.Driver" value="${driver}" />
 			<property name="JDBC.ConnectionURL" value="${url}" />

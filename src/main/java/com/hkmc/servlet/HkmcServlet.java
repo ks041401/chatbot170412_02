@@ -53,6 +53,7 @@ public class HkmcServlet extends HttpServlet
 	{
 		JsonObject result = new JsonObject();
 		boolean isKr = "KR".equals(request.getParameter("lang"));
+		System.out.println("@.@ " + request.getParameter("lang"));
 		String text = request.getParameter("say");
 		if ( text == null || text.length() == 0 )
 		{
@@ -77,6 +78,10 @@ public class HkmcServlet extends HttpServlet
 			
 			try
 			{
+				if ( "@@hello".equals(text) ) {
+					session.getContext().clear();
+					text = text.substring(2);
+				}
 				watsonConv.message(session, text, isKr);
 
 				// 대화 저장
@@ -100,6 +105,7 @@ public class HkmcServlet extends HttpServlet
 				if ( session.getPostResult() != null )
 					result.add("action", session.getPostResult());
 				
+				result.addProperty("debug", session.getDebug());
 			}catch(Exception ex) {
 				ex.printStackTrace();
 				result.addProperty("returnCode", "FAIL");

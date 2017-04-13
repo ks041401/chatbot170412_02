@@ -30,7 +30,7 @@ public class ActionCollection
 	{
 		actions.put("retrieve_car_info", new SampleDBAction());
 		actions.put("acaroption", new CarOptionAction());
-		//actions.put("acarkind", new SamplePostAction());
+		actions.put("acarkind", new SamplePostAction());
 		actions.put("acarkind", new CarKindPostAction());
 	}
 	
